@@ -1,0 +1,32 @@
+﻿@using GlobalShop.Models
+@model GlobalShop.Models.Cart
+
+<style>
+    #cart {
+        color: #ffffff; /* Yazı rengini beyaz tut */
+        background-color: #6f42c1; /* Mor arka plan */
+        border-radius: 5px; /* Kenarları yuvarlat */
+        padding: 5px 10px; /* İç boşluk ekle */
+        transition: background-color 0.3s, color 0.3s; /* Geçiş efekti */
+    }
+
+        #cart:hover {
+            background-color: #007bff; /* Hover'da mavi arka plan */
+            color: #ff4081; /* Hover'da pembe yazı */
+        }
+
+    .nav-link {
+        color: inherit; /* Yazı rengi otomatik olarak #cart'tan alınır */
+    }
+</style>
+
+
+<ul class="navbar-nav my-2 my-lg-0">
+    <li id="cart" class="nav-item ">
+        <a class="nav-link" href="/Cart">
+            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            (@Model.CartLine.Count)
+        </a>
+
+    </li>
+</ul>

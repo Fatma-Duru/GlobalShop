@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GlobalShop.Entity.Product>
+
+@{
+    ViewBag.Title = "Ana Sayfa";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <h2 style="color: #6a1b9a;">Yeni Ürün</h2> <!-- Başlık mor renk -->
+    <hr />
+    <p>
+        @Html.ActionLink("Yeni Ürün Ekle", "Create", null, new { @class = "btn btn-secondary" }) <!-- Mor buton -->
+    </p>
+    <table class="table table-bordered table-striped" style="background-color: #f8f8f8;">
+        <thead style="background-color: #6a1b9a; color: white;">
+            <!-- Mor başlıklar -->
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Image)</th>
+                <th>@Html.DisplayNameFor(model => model.Category.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                 <th>Onay Durumu</th>
+                <th>Ana Sayfada Göster</th>
+                <th style="width: 150px;">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="background-color: #ffffff;">
+                    <!-- Beyaz zemin -->
+                    <td>
+                        <img src="~/Upload/@item.Image" width="50" alt="Ürün Görseli" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @if (item.IsApproved)
+                        {
+                            <span class="badge" style="background-color: #2196f3; color: white;">Onaylı</span> <!-- Mavi badge -->
+                        }
+                        else
+                        {
+                            <span class="badge" style="background-color: #e91e63; color: white;">Onaysız</span> <!-- Pembe badge -->
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsHome)
+                        {
+                            <label class="badge" style="background-color: #2196f3; color: white;">
+                                <i class="fas fa-check-circle"></i> Evet
+                            </label> <!-- Mavi badge -->
+                        }
+                        else
+                        {
+                            <label class="badge" style="background-color: #e91e63; color: white;">
+                                <i class="fas fa-times-circle"></i> Hayır
+                            </label> <!-- Pembe badge -->
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Güncelle", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

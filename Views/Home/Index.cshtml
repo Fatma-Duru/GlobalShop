@@ -1,0 +1,28 @@
+﻿@using GlobalShop.Models
+@model IEnumerable<ProductModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Jumbotron (Büyük tanıtım kutusu) -->
+<!-- Jumbotron (Büyük tanıtım kutusu) -->
+<div class="jumbotron text-center"  color: white; border-radius: 10px; padding: 60px 30px;">
+    <div class="container">
+        <h1 class="display-3 font-weight-bold">GlobalShop'a Hoş Geldiniz!</h1>
+        <p class="lead mb-4" style="font-size: 1.25rem;">
+            Alışverişinizi daha kolay ve keyifli hale getirmek için buradayız. Özel ürünlerimizi keşfedin ve harika fırsatlardan yararlanın.
+        </p>
+        <hr class="my-4" style="border-top: 3px solid #ff4081; width: 50%; margin: 20px auto;">
+        <p class="mb-4" style="font-size: 1.1rem;">
+            Geniş ürün yelpazemiz ve avantajlı fiyatlarımızla size en iyi deneyimi sunmayı hedefliyoruz. Hemen alışverişe başlayın!
+        </p>
+        <a class="btn btn-lg btn-warning shadow" href="/Home/List" role="button" style="background-color: #ff4081; border-color: #ff4081; color: white; padding: 12px 40px; font-size: 1.1rem;">Hemen Alışverişe Başla</a>
+    </div>
+</div>
+
+
+
+<!-- Kartlar (Card Deck) bölümü -->
+<div class="container pb-5">
+    @Html.Partial("_ProductList", Model)
+</div>

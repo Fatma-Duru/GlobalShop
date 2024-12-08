@@ -1,0 +1,108 @@
+﻿@model GlobalShop.Models.Cart
+@{
+    ViewBag.Title = "Sepetim";
+}
+
+<style>
+    /* Tablo başlıkları ve kenarlıklar */
+    table.table-bordered th {
+        background-color: #6f42c1; /* Mor */
+        color: #ffffff; /* Beyaz yazı */
+    }
+
+    table.table-bordered td {
+        border-color: #007bff; /* Mavi kenarlık */
+    }
+
+    /* buton renkleri */
+    .btn-danger {
+        background-color: #ff4081; /* Pembe */
+        border-color: #ff4081;
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Mavi */
+        border-color: #007bff;
+    }
+
+    /* H2 başlık */
+    h2 {
+        color: #6f42c1; /* Mor */
+    }
+
+    /* Uyarı mesajı */
+    .alert-warning {
+        background-color: #ff4081; /* Pembe */
+        color: white;
+    }
+</style>
+
+<div class="container pb-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Alışveriş Sepeti</h2>
+            <hr />
+            @if (@Model.CartLine.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Miktar</th>
+                            <th>Ürün Adı</th>
+                            <th>Fiyat</th>
+                            <th>Toplam</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartLine)
+                        {
+                            <tr>
+                                <td><img src="~/Upload/@item.Product.Image" width="50" /></td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.Price.ToString("C", new System.Globalization.CultureInfo("tr-TR"))</td>
+                                <td>@((item.Product.Price * item.Quantity).ToString("C", new System.Globalization.CultureInfo("tr-TR")))</td>
+                                <td>
+                                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                                    {
+                                        @Html.Hidden("Id", item.Product.Id)
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            Sil
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td>
+                                @(Model != null ? Model.Total().ToString("C", new System.Globalization.CultureInfo("tr-TR")) : "Model boş")
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="text-center">
+                    <a href="/Home/List" class="btn btn-primary">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        Alışverişe Devam Et
+                    </a>
+                    <a href="/Cart/Checkout" class="btn btn-primary" style="background-color: #ff4081; color: white;">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Alışverişi Tamamla
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning" role="alert">
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    Alışveriş Sepetinizde Ürün Bulunmamaktadır.
+                </div>
+            }
+        </div>
+    </div>
+</div>

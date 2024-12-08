@@ -1,0 +1,86 @@
+﻿@using GlobalShop.Entity
+@model Product
+@{
+    ViewBag.Title = "Details";
+}
+
+<div id="product-details" class="container pb-5" style="background-color: #f8f9fa; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);">
+    <div class="row">
+
+        <!-- Ürün Görseli -->
+        <!-- Ürün Görseli -->
+        <div class="col-md-6">
+            <div style="position: relative; width: 100%; padding-top: 100%; overflow: hidden; border-radius: 10px;">
+                <img src="~/Upload/@Model.Image" class="img-fluid" alt="@Model.Name"
+                     style="position: absolute; top: 0; left: 0; width: 90%; height: 90%; object-fit: cover; margin-top: 20px; margin-bottom: -30px;">
+            </div>
+        </div>
+
+
+        <!-- Ürün Detayları -->
+        <div class="col-md-6">
+            <!-- Başlık -->
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <h1 style="color: #6f42c1;">@Model.Name</h1>
+                </div>
+            </div>
+
+            <!-- Stok Bilgisi -->
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    @if (Model.IsApproved)
+                    {
+                        <span class="badge badge-primary" style="background-color: #42a5f5; color: white;">Stokta</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger" style="background-color: #ff4081; color: white;">Stokta Yok</span>
+                    }
+
+                    <span class="product-number" style="color: #999999;">#526454512</span>
+                </div>
+            </div>
+
+            <!-- Açıklama -->
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="product-description">
+                        <p style="font-size: 16px; color: #333333;">@Model.Description</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Puanlama -->
+            <div class="row mt-2">
+                <div class="col-md-4">
+                    <i class="fa fa-star" style="color: #ffd700;"></i>
+                    <i class="fa fa-star" style="color: #ffd700;"></i>
+                    <i class="fa fa-star" style="color: #ffd700;"></i>
+                    <i class="fa fa-star" style="color: #ffd700;"></i>
+                    <i class="fa fa-star-half-o" style="color: #ffd700;"></i>
+                    <span class="badge badge-success" style="background-color: #42a5f5; color: white;">24</span>
+                </div>
+                <div id="write-review" class="col-md-4">
+                    <a href="#" style="color: #6f42c1;">Write a review</a>
+                </div>
+            </div>
+
+            <!-- Fiyat ve Sepete Ekle -->
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    @using (Html.BeginForm("AddToCart", "Cart"))
+                    {
+                        @Html.HiddenFor(i => i.Id)
+                        <button type="submit" class="btn btn-success" value="Add To Cart" style="background-color: #42a5f5; border-color: #42a5f5; font-weight: bold;">
+                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                            Sepete Ekle
+                        </button>
+                    }
+
+                    <h4 id="product-price" style="font-size: 28px; color: #ff4081; font-weight: bold; margin-top: 10px;">@Model.Price TL</h4>
+                </div>
+            </div>
+        </div>
+
+    </div>

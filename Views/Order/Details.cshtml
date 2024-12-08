@@ -1,0 +1,124 @@
+﻿@model GlobalShop.Models.OrderDetailsModel
+
+@using GlobalShop.Entity
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["message"]
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-12">
+            @helper RenderRow(string label, object value)
+            {
+                <dl class="row mb-3">
+                    <dt class="col-sm-3">@label</dt>
+                    <dd class="col-sm-9">@value</dd>
+                </dl>
+            }
+
+            @RenderRow("Kullanıcı Adı", Model.UserName)
+
+            <dl class="row mb-3">
+                <dt class="col-sm-3">Sipariş Durumu</dt>
+                <dd class="col-sm-9">
+                    @using (Html.BeginForm("UpdateOrderState", "Order", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(i => i.OrderId)
+                        <div class="d-flex align-items-center">
+                            <select name="OrderState" class="form-control me-2" size="1">
+                                <option value="Waiting" @(Model.OrderState == EnumOrderState.Waiting ? "selected" : "")>Sipariş Bekliyor</option>
+                                <option value="Completed" @(Model.OrderState == EnumOrderState.Completed ? "selected" : "")>Sipariş Tamamlandı</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-sm">Güncelle</button>
+                        </div>
+                    }
+                </dd>
+            </dl>
+
+            @RenderRow("Sipariş ID", Model.OrderId)
+            @RenderRow("Sipariş Numarası", Model.OrderNumber)
+            @RenderRow("Toplam Tutar", Model.Total.ToString("C", new System.Globalization.CultureInfo("tr-TR")))
+            @RenderRow("Sipariş Tarihi", Model.OrderDate.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("tr-TR")))
+
+
+            <dl class="row mb-3">
+                <dt class="col-sm-3">Adres</dt>
+                <dd class="col-sm-9">
+                    <strong>@Model.AdresBasligi</strong>
+                    <hr />
+                    @Model.Adres<br />
+                    @Model.Sehir - @Model.Semt - @Model.Mahalle<br />
+                    @Model.PostaKodu
+                </dd>
+            </dl>
+
+            <dl class="row mb-3">
+                <dt class="col-sm-3">Ürünler</dt>
+                <dd class="col-sm-9">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr style="background-color: #6f42c1; color: white;">
+                                <th>Resim</th>
+                                <th>Ürün Adı</th>
+                                <th>Miktar</th>
+                                <th>Fiyat</th>
+                                <th>Detay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderLines)
+                            {
+                                <tr>
+                                    <td><img src="~/Upload/@item.Image" alt="Ürün Resmi" style="width:50px; height:50px;" class="img-fluid" /></td>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Price.ToString("C", new System.Globalization.CultureInfo("tr-TR"))</td>
+                                    <td>
+                                        <a href="/Home/Details/@item.ProductId" class="btn btn-sm" style="background-color: #007bff; color: white;" target="_blank">
+                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>Ürün Detayı
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 1200px;
+    }
+
+    dt {
+        color: #6f42c1;
+    }
+
+    .table-bordered {
+        border: 1px solid #007bff;
+    }
+
+        .table-bordered td, .table-bordered th {
+            border-color: #007bff;
+            vertical-align: middle;
+        }
+
+    .btn {
+        border-radius: 5px;
+    }
+
+    .table img {
+        border-radius: 8px;
+    }
+</style>

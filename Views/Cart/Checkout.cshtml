@@ -1,0 +1,143 @@
+﻿@model GlobalShop.Models.ShippingDetails
+@{
+    ViewBag.Title = "Checkout";
+}
+<style>
+    /* Hata mesajları */
+    .field-validation-error {
+        color: #ff4081; /* Pembe hata mesajı */
+        font-weight: bold;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .field-validation-valid {
+        display: none;
+    }
+
+    /* Hata alanları */
+    .input-validation-error {
+        border: 2px solid #ff4081; /* Pembe çerçeve */
+        background-color: #ffe6f2; /* Hafif pembe arka plan */
+    }
+
+    /* Genel buton */
+    .btn-primary {
+        background-color: #6f42c1; /* Mor */
+        border-color: #6f42c1;
+    }
+
+        .btn-primary:hover {
+            background-color: #007bff; /* Mavi hover */
+            border-color: #007bff;
+        }
+
+    /* Form başlıkları */
+    label {
+        color: #6f42c1; /* Mor renk */
+    }
+
+    /* Form arka plan */
+    .form-control {
+        background-color: #f9f9ff; /* Hafif mavi arka plan */
+        border-color: #6f42c1; /* Mor kenarlık */
+    }
+
+        .form-control:focus {
+            border-color: #007bff; /* Mavi odaklanma */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+</style>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h2>Şipariş Bilgileriniz</h2>
+            <hr />
+            <p>Lütfen Sipariş Bilgilerinizi Doldurunuz</p>
+
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true, "", new { @class = "validation-summary-errors" })
+
+                <div class="row mb-3">
+                    <label for="inputFullName" class="col-sm-2 col-form-label">User Name</label>
+                    <div class="col-sm-10">
+                        <span class="badge badge-primary" style="font-size: 1.5rem;">
+                            @User.Identity.Name
+                        </span>
+                    </div>
+                </div>
+
+
+                <!-- Adres Tanımı -->
+                <div class="row mb-3">
+                    <label for="inputAdresBasligi" class="col-sm-2 col-form-label">Adres Tanımı</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.AdresBasligi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.AdresBasligi, "", new { @class = "field-validation-error" })
+                    </div>
+                </div>
+
+                <!-- Adres -->
+                <div class="row mb-3">
+                    <label for="inputAdres" class="col-sm-2 col-form-label">Adres</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Adres, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Adres, "", new { @class = "field-validation-error" })
+                    </div>
+                </div>
+
+                <!-- Şehir -->
+                <div class="row mb-3">
+                    <label for="inputSehir" class="col-sm-2 col-form-label">Şehir</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Sehir, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Sehir, "", new { @class = "field-validation-error" })
+                    </div>
+                </div>
+
+                <!-- Semt -->
+                <div class="row mb-3">
+                    <label for="inputSemt" class="col-sm-2 col-form-label">Semt</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Semt, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Semt, "", new { @class = "field-validation-error" })
+                    </div>
+                </div>
+
+                <!-- Mahalle -->
+                <div class="row mb-3">
+                    <label for="inputMahalle" class="col-sm-2 col-form-label">Mahalle</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Mahalle, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Mahalle, "", new { @class = "field-validation-error" })
+                    </div>
+                </div>
+
+                <!-- Posta Kodu -->
+                <div class="row mb-3">
+                    <label for="inputPostaKodu" class="col-sm-2 col-form-label">Posta Kodu</label>
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.PostaKodu, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.PostaKodu, "", new { @class = "field-validation-error" })
+                    </div>
+                </div>
+
+                <!-- Kaydet Butonu -->
+                <div class="row mb-3">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

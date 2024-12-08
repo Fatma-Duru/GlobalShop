@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GlobalShop.Models.UserOrderModel>
+@{
+    ViewBag.Title = "Siparişlerim";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Sipariş Bilgileriniz</h2>
+            <hr />
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr style="background-color: #6f42c1; color: white;">
+                        <th>Sipariş Numarası</th>
+                        <th>Sipariş Tarihi</th>
+                        <th>Toplam Tutar</th>
+                        <th>Durum</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderNumber</td>
+                            <td>@item.OrderDate.ToShortDateString()</td>
+                            <td>@item.Total.ToString("C", new System.Globalization.CultureInfo("tr-TR"))</td>
+                            <td>
+                                @if (item.OrderState == GlobalShop.Entity.EnumOrderState.Waiting)
+                                {
+                                    <span class="badge" style="background-color: #d5006d; color: white;   border-radius: 8px;">Sipariş Bekliyor.</span>
+                                }
+                                else if (item.OrderState == GlobalShop.Entity.EnumOrderState.Completed)
+                                {
+                                    <span class="badge" style="background-color: #007bff; color: white; ; border-radius: 8px;">Sipariş Tamamlandı.</span>
+                                }
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Detaylar", "Details", new { id = @item.Id }, new { @class = "btn btn-sm", style = "background-color: #007bff; color: white;" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- CSS -->
+<style>
+    .container {
+        max-width: 1200px;
+    }
+
+    h2 {
+        color: #6f42c1;
+    }
+
+    .table-bordered {
+        border: 1px solid #007bff;
+    }
+
+        .table-bordered td, .table-bordered th {
+            border-color: #007bff;
+            vertical-align: middle;
+        }
+
+    .btn {
+        border-radius: 5px;
+    }
+</style>

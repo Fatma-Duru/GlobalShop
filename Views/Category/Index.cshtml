@@ -1,0 +1,43 @@
+﻿@model IEnumerable<GlobalShop.Entity.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <h2 class="text-center text-primary">Kategori Listesi</h2>
+    <hr />
+    <p>
+        @Html.ActionLink("Yeni Kategori", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    <hr />
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th class="text-purple">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="text-purple">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th style="width:145px"></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Güncelle", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Sil", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
